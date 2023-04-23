@@ -20,8 +20,6 @@ int _printf(const char *format, ...)
 		int posnegNum;
 		int negposNum;
 		char *str;
-		unsigned int str_len;
-		char *str_malloc;
 
 		if (*format == '%')
 		{
@@ -52,14 +50,14 @@ int _printf(const char *format, ...)
 					break;
 				case 's':
 					str = va_arg(args, char*);
-					str_len = _strlen(str);
-					str_malloc = malloc((str_len + 1) * sizeof(char));
-					str_malloc = _strncpy(str_malloc, str, str_len);
-					write(STDOUT_FILENO, (void *)str_malloc,
-							str_len + 1);
-					free(str_malloc);
+					write(STDOUT_FILENO, (void *)str,
+							_strlen(str));
 					break;
 				default:
+					write(STDOUT_FILENO, (void *)(format - 1),
+							sizeof(*format));
+					write(STDOUT_FILENO, (void *)format,
+							sizeof(*format));
 					break;
 			}
 			++format;
