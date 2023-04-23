@@ -9,7 +9,7 @@
  */
 int _printf(const char *format, ...)
 {
-	unsigned int length = strlen(format);
+	unsigned int length = _cstrlen(format);
 	unsigned int i;
 	va_list args;
 
@@ -52,10 +52,9 @@ int _printf(const char *format, ...)
 					break;
 				case 's':
 					str = va_arg(args, char*);
-					str_len = strlen(str);
+					str_len = _strlen(str);
 					str_malloc = malloc((str_len + 1) * sizeof(char));
-					strncpy(str_malloc, str, str_len);
-					str_malloc[str_len] = '\0';
+					str_malloc = _strncpy(str_malloc, str, str_len);
 					write(STDOUT_FILENO, (void *)str_malloc,
 							str_len + 1);
 					free(str_malloc);
